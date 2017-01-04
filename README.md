@@ -49,7 +49,7 @@ kalliope install --git-url git@github.com:bacardi55/kalliope-google-calendar.git
 
 ```
 
-Sample can be found in the [sample folder](sample).
+Sample can be found in the [sample folder](samples).
 
 ## Templates example
 
@@ -65,4 +65,4 @@ Sample can be found in the [sample folder](sample).
 {% endif %}
 ```
 
-Sample can be found in the [sample folder](sample).
+Sample can be found in the [sample folder](samples).
