@@ -1,4 +1,3 @@
-import argparse
 import logging
 import httplib2
 import os
@@ -29,23 +28,22 @@ class Google_calendar (NeuronModule):
             kwargs["cache"] = cache
         super(Google_calendar, self).__init__(**kwargs)
 
+        self.scopes = 'https://www.googleapis.com/auth/calendar.readonly'
+
         # get parameters form the neuron
         self.configuration = {
             'credentials_file': kwargs.get('credentials_file', None),
             'client_secret_file': kwargs.get('client_secret_file', None),
-            'scopes': kwargs.get('scopes', None),
             'application_name': kwargs.get('application_name', None),
             'max_results': kwargs.get('max_results', 1),
-            'locale': kwargs.get('locale', None),
-            'no_meeting_msg': kwargs.get('no_meeting_msg', None),
-            'meeting_intro_msg': kwargs.get('meeting_intro_msg', None)
+            'locale': kwargs.get('locale', None)
         }
 
         # check parameters
         if self._is_parameters_ok():
             self.infos = {
                 "events": [],
-                "message": self.configuration['no_meeting_msg']
+                "count": 0
             }
 
             if self.configuration['locale'] is not None:
@@ -61,9 +59,6 @@ class Google_calendar (NeuronModule):
                 singleEvents=True, orderBy='startTime').execute()
             events = eventsResult.get('items', [])
 
-            if len(events) > 0:
-                self.infos['message'] = self.configuration['meeting_intro_msg']
-
             for event in events:
                 start = event['start'].get('dateTime')
                 weekday = dateutil.parser.parse(start).strftime('%A')
@@ -73,6 +68,7 @@ class Google_calendar (NeuronModule):
                 minute = dateutil.parser.parse(start).strftime('%M')
                 self.infos["events"].append({'summary': event['summary'],
                     'time': {'hour': hour, 'minute': minute, 'weekday': weekday, 'day': day, 'month': month}})
+                self.infos['count'] += 1
 
             logger.debug("Google news return : %s" % self.infos)
 
@@ -89,11 +85,11 @@ class Google_calendar (NeuronModule):
         if self.configuration['credentials_file'] is None:
             raise InvalidParameterException("Google news needs a credentials_file")
 
-        if self.configuration['credentials_file'] is None:
-            raise InvalidParameterException("Google news needs a credentials_file")
+        if self.configuration['client_secret_file'] is None:
+            raise InvalidParameterException("Google news needs a client_secret_file")
 
-        if self.configuration['credentials_file'] is None:
-            raise InvalidParameterException("Google news needs a credentials_file")
+        if self.configuration['max_results'] is None:
+            raise InvalidParameterException("Google news needs a max_results")
 
         if self.configuration['application_name'] is None:
             raise InvalidParameterException("Google news needs a application_name")
@@ -114,7 +110,7 @@ class Google_calendar (NeuronModule):
         store = Storage(credential_path)
         credentials = store.get()
         if not credentials or credentials.invalid:
-            flow = client.flow_from_clientsecrets(self.configuration['client_secret_file'], self.configuration['scopes'])
+            flow = client.flow_from_clientsecrets(self.configuration['client_secret_file'], self.scopes)
             flow.user_agent = self.configuration['application_name']
             credentials = tools.run_flow(flow, store, flags)
 

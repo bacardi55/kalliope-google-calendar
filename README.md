@@ -10,30 +10,28 @@ kalliope install --git-url git@github.com:bacardi55/kalliope-google-calendar.git
 
 ## Options
 
-| parameter          | required | default | choices | comment                                                                                                                                                                               |
-|--------------------|----------|---------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| credentials_file   | yes      |         |         | The json file downloaded on google calendar API, see the "Step 1: Turn on the Google Calendar API" of this page: https://developers.google.com/google-apps/calendar/quickstart/python |
-| client_secret_file | yes      |         |         | The file where the oauth credentials will be written                                                                                                                                  |
-| scopes             | yes      |         |         | The scopes of the api, in this case: https://www.googleapis.com/auth/calendar.readonly                                                                                                |
-| application_name   | yes      |         |         | The name of your app as setup in google calendar api manager                                                                                                                          |
-| max_results        | yes      |         | integer | The number of event you want to retrieve                                                                                                                                              |
-| locale             | yes      |         |         | Your locale (eg: fr_FR.UTF-8). needs to be an installed locale on your system!                                                                                                        |
-| file_template      | yes      |         |         | Template file to use                                                                                                                                                                  |
-| meeting_intro_msg  | yes      |         |         | Message said before listing events                                                                                                                                                    |
-| no_meeting_msg     | yes      |         |         | Message said in case of no next events found                                                                                                                                          |
+| parameter          | required | default | choices | comment                                                                                                                         |
+|--------------------|----------|---------|---------|---------------------------------------------------------------------------------------------------------------------------------|
+| credentials_file   | yes      |         |         | The json file downloaded on google calendar API, see the "Step 1: Turn on the Google Calendar API"
+                                                      of this page: https://developers.google.com/google-apps/calendar/quickstart/python                                              |
+| client_secret_file | yes      |         |         | The file where the oauth credentials will be written                                                                            |
+| application_name   | yes      |         |         | The name of your app as setup in google calendar api manager                                                                    |
+| max_results        | yes      |         | integer | The number of event you want to retrieve                                                                                        |
+| locale             | yes      |         |         | Your locale (eg: fr_FR.UTF-8). needs to be an installed locale on your system!                                                  |
+| file_template      | yes      |         |         | Template file to use                                                                                                            |
 
 
 ## Return Values
 
-| Name    | Description                                                                                                                                                                                          | Type   | sample |
-|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|--------|
-| message | Plain text intro message (either meeting_intro_msg or no_meeting_msg)                                                                                                                                | string |        |
-| events  | A list of events. Each event has the following information: event['summary'], event['time']['weekday'], event['time']['day'], event['time']['month'], event['time']['hour'], event['time']['minute'] | list   |        |
+| Name    | Description                   | Type   | sample                                                                                                                        |
+|---------|-------------------------------|--------|-------------------------------------------------------------------------------------------------------------------------------|
+| count   | The number of event retrieved | string | 3 (could be less than max_results if not enough event has been found)                                                         |
+| events  | A list of events.             | list   | Each event has the following information: event['summary'], event['time']['weekday'],
+                                                     event['time']['day'], event['time']['month'], event['time']['hour'], event['time']['minute']                                  |
 
 
 ## Synapses example
 
-This synapse will look for the {{ query }} spelt by the user on Wikipedia
 ```
 ---
   - name: "Google-agenda-next"
@@ -53,3 +51,20 @@ This synapse will look for the {{ query }} spelt by the user on Wikipedia
 
 ```
 
+Sample can be found in the [sample folder](sample).
+
+## Templates example
+
+```
+{% if count > 0 %}
+    Your next meetings are
+    {% for event in events %}
+        on {{ event['time']['weekday'] }}, {{ event['time']['day'] }}, {{ event['time']['month'] }}, à {{ event['time']['hour'] }} hour, {{ event['time']['minute'] }} :
+        {{ event['summary'] }}
+    {% endfor %}
+{% else %}
+    You don't have any meeting coming up
+{% endif %}
+```
+
+Sample can be found in the [sample folder](sample).
