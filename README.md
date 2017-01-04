@@ -12,8 +12,7 @@ kalliope install --git-url git@github.com:bacardi55/kalliope-google-calendar.git
 
 | parameter          | required | default | choices | comment                                                                                                                         |
 |--------------------|----------|---------|---------|---------------------------------------------------------------------------------------------------------------------------------|
-| credentials_file   | yes      |         |         | The json file downloaded on google calendar API, see the "Step 1: Turn on the Google Calendar API"
-                                                      of this page: https://developers.google.com/google-apps/calendar/quickstart/python                                              |
+| credentials_file   | yes      |         |         | The json file downloaded on google calendar API, see the "Step 1: Turn on the Google Calendar API" of this page: https://developers.google.com/google-apps/calendar/quickstart/python                                              |
 | client_secret_file | yes      |         |         | The file where the oauth credentials will be written                                                                            |
 | application_name   | yes      |         |         | The name of your app as setup in google calendar api manager                                                                    |
 | max_results        | yes      |         | integer | The number of event you want to retrieve                                                                                        |
@@ -26,8 +25,7 @@ kalliope install --git-url git@github.com:bacardi55/kalliope-google-calendar.git
 | Name    | Description                   | Type   | sample                                                                                                                        |
 |---------|-------------------------------|--------|-------------------------------------------------------------------------------------------------------------------------------|
 | count   | The number of event retrieved | string | 3 (could be less than max_results if not enough event has been found)                                                         |
-| events  | A list of events.             | list   | Each event has the following information: event['summary'], event['time']['weekday'],
-                                                     event['time']['day'], event['time']['month'], event['time']['hour'], event['time']['minute']                                  |
+| events  | A list of events.             | list   | Each event has the following information: event['summary'], event['time']['weekday'], event['time']['day'], event['time']['month'], event['time']['hour'], event['time']['minute']                                  |
 
 
 ## Synapses example
