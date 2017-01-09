@@ -7,7 +7,7 @@ Get your next meetings from your google agenda
 ## Installation
 
   ```
-  kalliope install --git-url git@github.com:bacardi55/kalliope-google-calendar.git
+  kalliope install --git-url https://github.com/bacardi55/kalliope-google-calendar.git
   ```
 
 ## Options
