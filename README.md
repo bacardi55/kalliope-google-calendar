@@ -46,7 +46,6 @@ Get your next meetings from your google agenda
           max_results: 3
           locale: fr_FR.UTF-8 # needs to be an installed locale
           no_meeting_msg: "You have no coming meetings"
-          meeting_intro_msg: "Your 3 next meetings are"
           file_template: "templates/fr_google_calendar.j2"
 
 ```
