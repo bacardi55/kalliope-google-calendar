@@ -61,6 +61,11 @@ class Google_calendar (NeuronModule):
 
             for event in events:
                 start = event['start'].get('dateTime')
+
+                # All day event
+                if start is None:
+                    start = event['start'].get('date')
+
                 weekday = dateutil.parser.parse(start).strftime('%A')
                 day = dateutil.parser.parse(start).strftime('%d')
                 month = dateutil.parser.parse(start).strftime('%B')
