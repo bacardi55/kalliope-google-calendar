@@ -69,5 +69,5 @@ Sample can be found in the [sample folder](samples).
 Sample can be found in the [sample folder](samples).
 
 
-* [Blog post about this neuron](http://bacardi55.org/en/blog/2017/kalliope-neuron-google-calendar-v2)
-* [my posts about kalliope](http://bacardi55.org/en/term/kalliope)
+* [Blog post about this neuron](http://bacardi55.org/2017/01/09/kalliope-neuron-for-google-calendar.html)
+* [my posts about kalliope](http://bacardi55.org/kalliope.html)
