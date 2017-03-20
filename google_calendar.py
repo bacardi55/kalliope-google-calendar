@@ -51,7 +51,7 @@ class Google_calendar (NeuronModule):
 
             credentials = self.get_credentials()
             http = credentials.authorize(httplib2.Http())
-            service = discovery.build('calendar', 'v3', http=http)
+            service = discovery.build('calendar', 'v3', http=http, cache_discovery=False)
 
             now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
             eventsResult = service.events().list(
