@@ -8,4 +8,8 @@
     - name: "Install pip dependencies"
       pip:
         name: google-api-python-client
-        version: 1.5.5
+        version: 1.6.5
+    - name: "Install pip dependencies"
+      pip:
+        name: python-dateutil
+        version: 2.7.2
